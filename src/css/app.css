@@ -1,0 +1,52 @@
+@import url("./modern-normalize.css");
+
+header {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+#name,
+#email,
+#phone {
+    border: 0;
+}
+
+input {
+    background-color: transparent;
+    padding: 8px;
+    margin: 8px;
+    /* display: block; */
+    width: 100%;
+}
+
+::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+.cvEditForm {
+    margin: 0 20%;
+}
+
+.edit {
+    background-color: transparent;
+    padding: 8px;
+    margin: 8px;
+    display: block;
+    width: 100%;
+}
+
+.editDisabled {
+    pointer-events: none;
+    border: 0;
+}
+
+.editEducationBtn,
+.editWorkBtn {
+    display: none;
+}
