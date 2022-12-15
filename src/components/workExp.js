@@ -38,7 +38,7 @@ class WorkExp extends Component {
         localStorage.setItem("companyName", companyName);
         localStorage.setItem("positionTitle", positionTitle);
         localStorage.setItem("jobDescription", jobDescription);
-        localStorage.set("jobDates", jobDates);
+        localStorage.setItem("jobDates", jobDates);
 
         const editWorkBtn = document.querySelector(".editWorkBtn");
         const saveWorkBtn = document.querySelector(".saveWorkBtn");
@@ -70,7 +70,7 @@ class WorkExp extends Component {
                     name="companyName"
                     id="companyName"
                     placeholder="Company Name"
-                    onClick={this.handleInputChange}
+                    onChange={this.handleInputChange}
                     className={this.state.class}
                 />
                 <input
@@ -78,7 +78,7 @@ class WorkExp extends Component {
                     name="positionTitle"
                     id="positionTitle"
                     placeholder="Position Title"
-                    onClick={this.handleInputChange}
+                    onChange={this.handleInputChange}
                     className={this.state.class}
                 />
                 <input
@@ -86,7 +86,7 @@ class WorkExp extends Component {
                     name="jobDescription"
                     id="jobDescription"
                     placeholder="Job Description"
-                    onClick={this.handleInputChange}
+                    onChange={this.handleInputChange}
                     className={this.state.class}
                 />
                 <input
@@ -94,7 +94,7 @@ class WorkExp extends Component {
                     name="jobDates"
                     id="jobDates"
                     placeholder="Job Dates"
-                    onClick={this.handleInputChange}
+                    onChange={this.handleInputChange}
                     className={this.state.class}
                 />
                 <button className="editWorkBtn" onClick={this.editWorkHistory}>
