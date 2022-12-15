@@ -2,15 +2,6 @@ import React, { Component } from "react";
 // import "../css/app.css";
 
 class GeneralInfo extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    handleInputChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
     render() {
         return (
             <section>
@@ -32,7 +23,7 @@ class GeneralInfo extends Component {
                     onChange={this.props.handleInputChange}
                     onBlur={this.props.saveGeneralInfoInput}
                     placeholder="Email"
-                    value={this.props.state.name}
+                    value={this.props.state.email}
                 />
                 <input
                     type="tel"
@@ -41,7 +32,7 @@ class GeneralInfo extends Component {
                     onChange={this.props.handleInputChange}
                     onBlur={this.props.saveGeneralInfoInput}
                     placeholder="Telephone"
-                    value={this.props.state.name}
+                    value={this.props.state.phone}
                 />
             </section>
         );
