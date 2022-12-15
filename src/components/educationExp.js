@@ -1,105 +1,83 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class EducationExp extends Component {
-    constructor(props) {
-        super(props);
+const EducationExp = () => {
+    const [educationInfo, setEducationInfo] = useState(() => {
+        const schoolName = localStorage.getItem("schoolName");
+        const subjectStudied = localStorage.getItem("subjectStudied");
+        const schoolDates = localStorage.getItem("schoolDates");
 
-        this.state = {
-            schoolName: "",
-            subjectStudied: "",
-            schoolDates: "",
+        return {
+            schoolName: schoolName || "",
+            subjectStudied: subjectStudied || "",
+            schoolDates: schoolDates || "",
             class: "edit",
         };
+    });
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.saveEducationHistory = this.saveEducationHistory.bind(this);
-        this.editEducationHistory = this.editEducationHistory.bind(this);
-    }
-
-    handleInputChange(e) {
+    const handleChange = (e) => {
         const { name, value } = e.target;
+        setEducationInfo({ ...educationInfo, [name]: value });
+    };
 
-        this.setState({ [name]: value });
-    }
-
-    saveEducationHistory(e) {
+    const saveEducationHistory = (e) => {
         e.preventDefault();
-        const { schoolName, subjectStudied, schoolDates } = this.state;
-        localStorage.setItem("schoolName", schoolName);
-        localStorage.setItem("subjectStudied", subjectStudied);
-        localStorage.setItem("schoolDates", schoolDates);
-
+        localStorage.setItem("schoolName", educationInfo.schoolName);
+        localStorage.setItem("subjectStudied", educationInfo.subjectStudied);
+        localStorage.setItem("schoolDates", educationInfo.schoolDates);
         const editEducationBtn = document.querySelector(".editEducationBtn");
         const saveEducationBtn = document.querySelector(".saveEducationBtn");
         saveEducationBtn.style.display = "none";
         editEducationBtn.style.display = "inline-block";
-        this.setState({ class: "editDisabled" });
-    }
+        setEducationInfo({ ...educationInfo, class: "editDisabled" });
+    };
 
-    editEducationHistory(e) {
+    const editEducationHistory = (e) => {
         e.preventDefault();
         const saveEducationBtn = document.querySelector(".saveEducationBtn");
         const editEducationBtn = document.querySelector(".editEducationBtn");
         saveEducationBtn.style.display = "inline-block";
         editEducationBtn.style.display = "none";
-        this.setState({ class: "edit" });
-    }
+        setEducationInfo({ ...educationInfo, class: "edit" });
+    };
 
-    componentDidMount() {
-        let schoolName = localStorage.getItem("schoolName");
-        let subjectStudied = localStorage.getItem("subjectStudied");
-        let schoolDates = localStorage.getItem("schoolDates");
-
-        if (schoolName === null) schoolName = "";
-        if (subjectStudied === null) subjectStudied = "";
-        if (schoolDates === null) schoolDates = "";
-
-        this.setState({ schoolName, subjectStudied, schoolDates });
-    }
-
-    render() {
-        return (
-            <section className="educationExpSection">
-                <h3>Educational Experience:</h3>
-                <input
-                    type="text"
-                    name="schoolName"
-                    id="schoolName"
-                    placeholder="School Name"
-                    onChange={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <input
-                    type="text"
-                    name="subjectStudied"
-                    id="subjectStudied"
-                    placeholder="Subjects Studied"
-                    onChange={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <input
-                    type="text"
-                    name="schoolDates"
-                    id="schoolDates"
-                    placeholder="School Dates"
-                    onChange={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <button
-                    onClick={this.editEducationHistory}
-                    className="editEducationBtn"
-                >
-                    Edit
-                </button>
-                <button
-                    onClick={this.saveEducationHistory}
-                    className="saveEducationBtn"
-                >
-                    Save
-                </button>
-            </section>
-        );
-    }
-}
+    return (
+        <section className="educationExpSection">
+            <h3>Educational Experience:</h3>
+            <input
+                type="text"
+                name="schoolName"
+                id="schoolName"
+                placeholder="School Name"
+                onChange={handleChange}
+                className={educationInfo.class}
+                value={educationInfo.schoolName}
+            />
+            <input
+                type="text"
+                name="subjectStudied"
+                id="subjectStudied"
+                placeholder="Subjects Studied"
+                onChange={handleChange}
+                className={educationInfo.class}
+                value={educationInfo.subjectStudied}
+            />
+            <input
+                type="text"
+                name="schoolDates"
+                id="schoolDates"
+                placeholder="School Dates"
+                onChange={handleChange}
+                className={educationInfo.class}
+                value={educationInfo.schoolDates}
+            />
+            <button onClick={editEducationHistory} className="editEducationBtn">
+                Edit
+            </button>
+            <button onClick={saveEducationHistory} className="saveEducationBtn">
+                Save
+            </button>
+        </section>
+    );
+};
 
 export default EducationExp;

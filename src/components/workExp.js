@@ -1,111 +1,95 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class WorkExp extends Component {
-    constructor(props) {
-        super(props);
+const WorkExp = () => {
+    const [workInfo, setWorkInfo] = useState(() => {
+        const savedCompanyName = localStorage.getItem("companyName");
+        const savedPositionTitle = localStorage.getItem("positionTitle");
+        const savedJobDescription = localStorage.getItem("jobDescription");
+        const savedJobDates = localStorage.getItem("jobDates");
 
-        this.state = {
-            companyName: "",
-            positionTitle: "",
-            jobDescription: "",
-            jobDates: "",
+        return {
+            companyName: savedCompanyName || "",
+            positionTitle: savedPositionTitle || "",
+            jobDescription: savedJobDescription || "",
+            jobDates: savedJobDates || "",
             class: "edit",
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.editWorkHistory = this.editWorkHistory.bind(this);
-        this.saveWorkHistory = this.saveWorkHistory.bind(this);
-    }
+    });
 
-    handleInputChange(e) {
+    const handleChange = (e) => {
         const { name, value } = e.target;
+        setWorkInfo({ ...workInfo, [name]: value });
+    };
 
-        this.setState({ [name]: value });
-    }
-
-    editWorkHistory(e) {
+    const editWorkHistory = (e) => {
         e.preventDefault();
         const editWorkBtn = document.querySelector(".editWorkBtn");
         const saveWorkBtn = document.querySelector(".saveWorkBtn");
         editWorkBtn.style.display = "none";
         saveWorkBtn.style.display = "inline-block";
-        this.setState({ class: "edit" });
-    }
+        setWorkInfo({ ...workInfo, class: "edit" });
+    };
 
-    saveWorkHistory(e) {
+    const saveWorkHistory = (e) => {
         e.preventDefault();
-        const { companyName, positionTitle, jobDescription, jobDates } =
-            this.state;
-        localStorage.setItem("companyName", companyName);
-        localStorage.setItem("positionTitle", positionTitle);
-        localStorage.setItem("jobDescription", jobDescription);
-        localStorage.set("jobDates", jobDates);
-
+        localStorage.setItem("companyName", workInfo.companyName);
+        localStorage.setItem("positionTitle", workInfo.positionTitle);
+        localStorage.setItem("jobDescription", workInfo.jobDescription);
+        localStorage.setItem("jobDates", workInfo.jobDates);
         const editWorkBtn = document.querySelector(".editWorkBtn");
         const saveWorkBtn = document.querySelector(".saveWorkBtn");
         editWorkBtn.style.display = "inline-block";
         saveWorkBtn.style.display = "none";
-        this.setState({ class: "editDisabled" });
-    }
+        setWorkInfo({ ...workInfo, class: "editDisabled" });
+    };
 
-    componentDidMount() {
-        let companyName = localStorage.getItem("companyName");
-        let positionTitle = localStorage.getItem("positionTitle");
-        let jobDescription = localStorage.getItem("jobDescription");
-        let jobDates = localStorage.getItem("jobDates");
-
-        if (companyName === null) companyName = "";
-        if (positionTitle === null) positionTitle = "";
-        if (jobDescription === null) jobDescription = "";
-        if (jobDates === null) jobDescription = "";
-
-        this.setState({ companyName, positionTitle, jobDescription, jobDates });
-    }
-
-    render() {
-        return (
-            <section>
-                <h3>Employment History:</h3>
-                <input
-                    type="text"
-                    name="companyName"
-                    id="companyName"
-                    placeholder="Company Name"
-                    onClick={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <input
-                    type="text"
-                    name="positionTitle"
-                    id="positionTitle"
-                    placeholder="Position Title"
-                    onClick={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <input
-                    type="text"
-                    name="jobDescription"
-                    id="jobDescription"
-                    placeholder="Job Description"
-                    onClick={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <input
-                    type="text"
-                    name="jobDates"
-                    id="jobDates"
-                    placeholder="Job Dates"
-                    onClick={this.handleInputChange}
-                    className={this.state.class}
-                />
-                <button className="editWorkBtn" onClick={this.editWorkHistory}>
-                    Edit
-                </button>
-                <button className="saveWorkBtn" onClick={this.saveWorkHistory}>
-                    Save
-                </button>
-            </section>
-        );
-    }
-}
+    return (
+        <section>
+            <h3>Employment History:</h3>
+            <input
+                type="text"
+                name="companyName"
+                id="companyName"
+                placeholder="Company Name"
+                onChange={handleChange}
+                className={workInfo.class}
+                value={workInfo.companyName}
+            />
+            <input
+                type="text"
+                name="positionTitle"
+                id="positionTitle"
+                placeholder="Position Title"
+                onChange={handleChange}
+                className={workInfo.class}
+                value={workInfo.positionTitle}
+            />
+            <input
+                type="text"
+                name="jobDescription"
+                id="jobDescription"
+                placeholder="Job Description"
+                onChange={handleChange}
+                className={workInfo.class}
+                value={workInfo.jobDescription}
+            />
+            <input
+                type="text"
+                name="jobDates"
+                id="jobDates"
+                placeholder="Job Dates"
+                onChange={handleChange}
+                className={workInfo.class}
+                value={workInfo.jobDates}
+            />
+            <button className="editWorkBtn" onClick={editWorkHistory}>
+                Edit
+            </button>
+            <button className="saveWorkBtn" onClick={saveWorkHistory}>
+                Save
+            </button>
+        </section>
+    );
+};
 
 export default WorkExp;
