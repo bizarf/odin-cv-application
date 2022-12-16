@@ -1,3 +1,10 @@
+The Odin Project - Project: CV Application
+This is a project where I will be creating a CV creator application using ReactJS.
+
+The current version in the main branch is the functional component version. There is a seperate branch for the original class component version. 
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
