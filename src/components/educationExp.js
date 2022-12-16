@@ -41,7 +41,7 @@ const EducationExp = () => {
     };
 
     return (
-        <section className="educationExpSection">
+        <form className="educationExpSection">
             <h3>Educational Experience:</h3>
             <input
                 type="text"
@@ -52,7 +52,7 @@ const EducationExp = () => {
                 className={educationInfo.class}
                 value={educationInfo.schoolName}
             />
-            <input
+            {/* <input
                 type="text"
                 name="subjectStudied"
                 id="subjectStudied"
@@ -60,7 +60,17 @@ const EducationExp = () => {
                 onChange={handleChange}
                 className={educationInfo.class}
                 value={educationInfo.subjectStudied}
-            />
+            /> */}
+            <textarea
+                name="subjectStudied"
+                id="subjectStudied"
+                cols="30"
+                rows="3"
+                placeholder="Subjects Studied"
+                onChange={handleChange}
+                className={educationInfo.class}
+                value={educationInfo.subjectStudied}
+            ></textarea>
             <input
                 type="text"
                 name="schoolDates"
@@ -76,7 +86,7 @@ const EducationExp = () => {
             <button onClick={saveEducationHistory} className="saveEducationBtn">
                 Save
             </button>
-        </section>
+        </form>
     );
 };
 

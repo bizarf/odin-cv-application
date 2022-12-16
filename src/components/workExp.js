@@ -64,7 +64,7 @@ const WorkExp = () => {
                 className={workInfo.class}
                 value={workInfo.positionTitle}
             />
-            <input
+            {/* <input
                 type="text"
                 name="jobDescription"
                 id="jobDescription"
@@ -72,7 +72,17 @@ const WorkExp = () => {
                 onChange={handleChange}
                 className={workInfo.class}
                 value={workInfo.jobDescription}
-            />
+            /> */}
+            <textarea
+                name="jobDescription"
+                id="jobDescription"
+                placeholder="Job Description"
+                onChange={handleChange}
+                className={workInfo.class}
+                value={workInfo.jobDescription}
+                cols="30"
+                rows="3"
+            ></textarea>
             <input
                 type="text"
                 name="jobDates"
