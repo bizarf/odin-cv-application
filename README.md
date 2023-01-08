@@ -3,6 +3,8 @@ This is a project where I will be creating a CV creator application using ReactJ
 
 The current version in the main branch is the functional component version. There is a seperate branch for the original class component version. 
 
+[View the live app here](https://bizarf.github.io/odin-cv-application/)
+
 ---
 
 # Getting Started with Create React App
