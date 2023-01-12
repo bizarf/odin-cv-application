@@ -1,93 +1,94 @@
 import React, { useState } from "react";
 
-const EducationExp = () => {
-    const [educationInfo, setEducationInfo] = useState(() => {
-        const schoolName = localStorage.getItem("schoolName");
-        const subjectStudied = localStorage.getItem("subjectStudied");
-        const schoolDates = localStorage.getItem("schoolDates");
+const EducationExpDynamic = () => {
+    const [educationInfo, setEducationInfo] = useState([
+        {
+            schoolName: "",
+            subjectStudied: "",
+            schoolDateStart: "",
+            schoolDateEnd: "",
+        },
+    ]);
 
-        return {
-            schoolName: schoolName || "",
-            subjectStudied: subjectStudied || "",
-            schoolDates: schoolDates || "",
-            class: "edit",
-        };
-    });
-
-    const handleChange = (e) => {
+    const handleChange = (index, e) => {
         const { name, value } = e.target;
-        setEducationInfo({ ...educationInfo, [name]: value });
+        let data = [...educationInfo];
+        data[index][name] = value;
+        setEducationInfo(data);
     };
 
-    const saveEducationHistory = (e) => {
+    const addFields = (e) => {
         e.preventDefault();
-        localStorage.setItem("schoolName", educationInfo.schoolName);
-        localStorage.setItem("subjectStudied", educationInfo.subjectStudied);
-        localStorage.setItem("schoolDates", educationInfo.schoolDates);
-        const editEducationBtn = document.querySelector(".editEducationBtn");
-        const saveEducationBtn = document.querySelector(".saveEducationBtn");
-        saveEducationBtn.style.display = "none";
-        editEducationBtn.style.display = "inline-block";
-        setEducationInfo({ ...educationInfo, class: "editDisabled" });
+        let newfield = {
+            schoolName: "",
+            subjectStudied: "",
+            schoolDateStart: "",
+            schoolDateEnd: "",
+        };
+        setEducationInfo([...educationInfo, newfield]);
     };
 
-    const editEducationHistory = (e) => {
+    const deleteField = (e, index) => {
         e.preventDefault();
-        const saveEducationBtn = document.querySelector(".saveEducationBtn");
-        const editEducationBtn = document.querySelector(".editEducationBtn");
-        saveEducationBtn.style.display = "inline-block";
-        editEducationBtn.style.display = "none";
-        setEducationInfo({ ...educationInfo, class: "edit" });
+        const updatedArr = educationInfo;
+        updatedArr.splice(index, 1);
+        setEducationInfo([...updatedArr]);
     };
 
     return (
-        <form className="educationExpSection">
+        <section className="educationExpSection">
             <h3>Educational Experience:</h3>
-            <input
-                type="text"
-                name="schoolName"
-                id="schoolName"
-                placeholder="School Name"
-                onChange={handleChange}
-                className={educationInfo.class}
-                value={educationInfo.schoolName}
-            />
-            {/* <input
-                type="text"
-                name="subjectStudied"
-                id="subjectStudied"
-                placeholder="Subjects Studied"
-                onChange={handleChange}
-                className={educationInfo.class}
-                value={educationInfo.subjectStudied}
-            /> */}
-            <textarea
-                name="subjectStudied"
-                id="subjectStudied"
-                cols="30"
-                rows="3"
-                placeholder="Subjects Studied"
-                onChange={handleChange}
-                className={educationInfo.class}
-                value={educationInfo.subjectStudied}
-            ></textarea>
-            <input
-                type="text"
-                name="schoolDates"
-                id="schoolDates"
-                placeholder="School Dates"
-                onChange={handleChange}
-                className={educationInfo.class}
-                value={educationInfo.schoolDates}
-            />
-            <button onClick={editEducationHistory} className="editEducationBtn">
-                Edit
-            </button>
-            <button onClick={saveEducationHistory} className="saveEducationBtn">
-                Save
-            </button>
-        </form>
+            {educationInfo.map((input, index) => {
+                return (
+                    <form key={index}>
+                        <hr />
+                        <input
+                            type="text"
+                            name="schoolName"
+                            id="schoolName"
+                            placeholder="School Name"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.schoolName}
+                        />
+                        <input
+                            name="subjectStudied"
+                            id="subjectStudied"
+                            placeholder="Subjects Studied"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.subjectStudied}
+                        ></input>
+                        <label htmlFor="schoolDateStart">Start Date:</label>
+                        <input
+                            type="date"
+                            name="schoolDateStart"
+                            id="schoolDateStart"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.schoolDateStart}
+                        />
+                        <label htmlFor="schoolDateEnd">End Date:</label>
+                        <input
+                            type="date"
+                            name="schoolDateEnd"
+                            id="schoolDateEnd"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.schoolDateEnd}
+                        />
+                        <button onClick={(e) => deleteField(e, index)}>
+                            Delete
+                        </button>
+                        {/* if this is the last set of fields, add an add more fields button */}
+                        {index === educationInfo.length - 1 && (
+                            <button onClick={addFields}>Add</button>
+                        )}
+                    </form>
+                );
+            })}
+            {educationInfo.length === 0 && (
+                <button onClick={addFields}>Add</button>
+            )}
+            <hr />
+        </section>
     );
 };
 
-export default EducationExp;
+export default EducationExpDynamic;

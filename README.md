@@ -1,7 +1,8 @@
 # The Odin Project - Project: CV Application
+
 This is a project where I will be creating a CV creator application using ReactJS.
 
-The current version in the main branch is the functional component version. There is a seperate branch for the original class component version. 
+The current version in the main branch is the functional component version. There is a seperate branch for the original class component version.
 
 [View the live app here](https://bizarf.github.io/odin-cv-application/)
 

@@ -1,103 +1,98 @@
 import React, { useState } from "react";
 
 const WorkExp = () => {
-    const [workInfo, setWorkInfo] = useState(() => {
-        const savedCompanyName = localStorage.getItem("companyName");
-        const savedPositionTitle = localStorage.getItem("positionTitle");
-        const savedJobDescription = localStorage.getItem("jobDescription");
-        const savedJobDates = localStorage.getItem("jobDates");
+    const [workInfo, setWorkInfo] = useState([
+        {
+            companyName: "",
+            positionTitle: "",
+            jobDescription: "",
+            jobDateStart: "",
+            jobDateEnd: "",
+        },
+    ]);
 
-        return {
-            companyName: savedCompanyName || "",
-            positionTitle: savedPositionTitle || "",
-            jobDescription: savedJobDescription || "",
-            jobDates: savedJobDates || "",
-            class: "edit",
-        };
-    });
-
-    const handleChange = (e) => {
+    const handleChange = (index, e) => {
         const { name, value } = e.target;
-        setWorkInfo({ ...workInfo, [name]: value });
+        let data = [...workInfo];
+        data[index][name] = value;
+        setWorkInfo(data);
     };
 
-    const editWorkHistory = (e) => {
+    const addFields = (e) => {
         e.preventDefault();
-        const editWorkBtn = document.querySelector(".editWorkBtn");
-        const saveWorkBtn = document.querySelector(".saveWorkBtn");
-        editWorkBtn.style.display = "none";
-        saveWorkBtn.style.display = "inline-block";
-        setWorkInfo({ ...workInfo, class: "edit" });
+        let newfield = {
+            companyName: "",
+            positionTitle: "",
+            jobDescription: "",
+            jobDateStart: "",
+            jobDateEnd: "",
+        };
+        setWorkInfo([...workInfo, newfield]);
     };
 
-    const saveWorkHistory = (e) => {
+    const deleteField = (e, index) => {
         e.preventDefault();
-        localStorage.setItem("companyName", workInfo.companyName);
-        localStorage.setItem("positionTitle", workInfo.positionTitle);
-        localStorage.setItem("jobDescription", workInfo.jobDescription);
-        localStorage.setItem("jobDates", workInfo.jobDates);
-        const editWorkBtn = document.querySelector(".editWorkBtn");
-        const saveWorkBtn = document.querySelector(".saveWorkBtn");
-        editWorkBtn.style.display = "inline-block";
-        saveWorkBtn.style.display = "none";
-        setWorkInfo({ ...workInfo, class: "editDisabled" });
+        const updatedArr = workInfo;
+        updatedArr.splice(index, 1);
+        setWorkInfo([...updatedArr]);
     };
 
     return (
         <section>
             <h3>Employment History:</h3>
-            <input
-                type="text"
-                name="companyName"
-                id="companyName"
-                placeholder="Company Name"
-                onChange={handleChange}
-                className={workInfo.class}
-                value={workInfo.companyName}
-            />
-            <input
-                type="text"
-                name="positionTitle"
-                id="positionTitle"
-                placeholder="Position Title"
-                onChange={handleChange}
-                className={workInfo.class}
-                value={workInfo.positionTitle}
-            />
-            {/* <input
-                type="text"
-                name="jobDescription"
-                id="jobDescription"
-                placeholder="Job Description"
-                onChange={handleChange}
-                className={workInfo.class}
-                value={workInfo.jobDescription}
-            /> */}
-            <textarea
-                name="jobDescription"
-                id="jobDescription"
-                placeholder="Job Description"
-                onChange={handleChange}
-                className={workInfo.class}
-                value={workInfo.jobDescription}
-                cols="30"
-                rows="3"
-            ></textarea>
-            <input
-                type="text"
-                name="jobDates"
-                id="jobDates"
-                placeholder="Job Dates"
-                onChange={handleChange}
-                className={workInfo.class}
-                value={workInfo.jobDates}
-            />
-            <button className="editWorkBtn" onClick={editWorkHistory}>
-                Edit
-            </button>
-            <button className="saveWorkBtn" onClick={saveWorkHistory}>
-                Save
-            </button>
+            {workInfo.map((input, index) => {
+                return (
+                    <form key={index}>
+                        <hr />
+                        <input
+                            type="text"
+                            name="companyName"
+                            id="companyName"
+                            placeholder="Company Name"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.companyName}
+                        />
+                        <input
+                            type="text"
+                            name="positionTitle"
+                            id="positionTitle"
+                            placeholder="Position Title"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.positionTitle}
+                        />
+                        <input
+                            type="text"
+                            name="jobDescription"
+                            id="jobDescription"
+                            placeholder="Job Description"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.jobDescription}
+                        />
+                        <input
+                            type="date"
+                            name="jobDateStart"
+                            id="jobDateStart"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.jobDateStart}
+                        />
+                        <input
+                            type="date"
+                            name="jobDateEnd"
+                            id="jobDateEnd"
+                            onChange={(e) => handleChange(index, e)}
+                            value={input.jobDateEnd}
+                        />
+                        <button onClick={(e) => deleteField(e, index)}>
+                            Delete
+                        </button>
+                        {index === workInfo.length - 1 && (
+                            <button onClick={addFields}>Add</button>
+                        )}
+                    </form>
+                );
+            })}
+            {workInfo.length === 0 && <button onClick={addFields}>Add</button>}
+            <hr />
         </section>
     );
 };

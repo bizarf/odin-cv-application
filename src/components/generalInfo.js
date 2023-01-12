@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 const GeneralInfo = () => {
-    const [generalInfo, setGeneralInfo] = useState(() => {
-        const savedName = localStorage.getItem("name");
-        const savedEmail = localStorage.getItem("email");
-        const savedPhone = localStorage.getItem("phone");
+    const [generalInfo, setGeneralInfo] = useState({
+        // const savedName = localStorage.getItem("name");
+        // const savedEmail = localStorage.getItem("email");
+        // const savedPhone = localStorage.getItem("phone");
 
-        return {
-            name: savedName || "",
-            email: savedEmail || "",
-            phone: savedPhone || "",
-        };
+        // return {
+        // name: savedName || "",
+        // email: savedEmail || "",
+        // phone: savedPhone || "",
+        // };
+        name: "",
+        email: "",
+        phone: "",
     });
 
     const handleChange = (e) => {
@@ -18,11 +21,11 @@ const GeneralInfo = () => {
         setGeneralInfo({ ...generalInfo, [name]: value });
     };
 
-    useEffect(() => {
-        localStorage.setItem("name", generalInfo.name);
-        localStorage.setItem("email", generalInfo.email);
-        localStorage.setItem("phone", generalInfo.phone);
-    });
+    // useEffect(() => {
+    //     localStorage.setItem("name", generalInfo.name);
+    //     localStorage.setItem("email", generalInfo.email);
+    //     localStorage.setItem("phone", generalInfo.phone);
+    // });
 
     return (
         <section>
@@ -52,6 +55,7 @@ const GeneralInfo = () => {
                 placeholder="Telephone"
                 value={generalInfo.phone}
             />
+            <hr />
         </section>
     );
 };
